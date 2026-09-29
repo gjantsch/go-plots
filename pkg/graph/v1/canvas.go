@@ -4,6 +4,7 @@ import (
 	"image/color"
 	"math"
 
+	"github.com/gjantsch/graph/pkg/models/v1"
 	"github.com/zserge/fenster"
 )
 
@@ -101,5 +102,16 @@ func (c *Canvas) Clear(col color.RGBA) {
 		for y := 0; y < c.Height; y++ {
 			c.canva.Set(x, y, col)
 		}
+	}
+}
+
+func (c *Canvas) FaceToScreen(f models.Face) (Vector, Vector, Vector) {
+	return c.Screen(f.V1), c.Screen(f.V2), c.Screen(f.V3)
+}
+
+func (c *Canvas) Screen(f models.Coordinate) Vector {
+	return Vector{
+		X: int((f.X + 1) * float64(c.Width) / 2),
+		Y: int((f.Y + 1) * float64(c.Height) / 2),
 	}
 }
