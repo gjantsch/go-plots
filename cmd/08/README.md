@@ -1,6 +1,3 @@
-# Exploration 07
+# Exploration 08
 
-Organized the whole mess.
-
-
-
+Added the Models and NDC coordinates.
