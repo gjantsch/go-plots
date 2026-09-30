@@ -77,6 +77,8 @@ func (c *Canvas) Line(origin Vector, destiny Vector, col color.RGBA) {
 func (c *Canvas) Rasterize(face models.Face) {
 	v1, v2, v3 := c.FaceToScreen(face)
 
+	rgb := color.RGBA{R: 255, G: 0, B: 0, A: 255}
+
 	// the bounding box vertices
 	topLeft := Vector{X: MinX([]Vector{v1, v2, v3}), Y: MinY([]Vector{v1, v2, v3})}
 	bottomRight := Vector{X: MaxX([]Vector{v1, v2, v3}), Y: MaxY([]Vector{v1, v2, v3})}
@@ -89,10 +91,14 @@ func (c *Canvas) Rasterize(face models.Face) {
 			beta := SignedTriangleArea(v2, v3, Vector{X: x, Y: y}) / area
 			gamma := SignedTriangleArea(v3, v1, Vector{X: x, Y: y}) / area
 			if alfa >= 0 && beta >= 0 && gamma >= 0 {
-				c.canva.Set(x, y, color.RGBA{R: 255, G: 0, B: 0, A: 255})
+				c.canva.Set(x, y, rgb)
 			}
 		}
 	}
+
+	c.Line(v1, v2, rgb)
+	c.Line(v2, v3, rgb)
+	c.Line(v3, v1, rgb)
 }
 
 func (c *Canvas) Set(x, y float64, col color.RGBA) {
